@@ -10,8 +10,7 @@ class Todo extends Component {
   }
 
   handleClick = () => {
-    alert("hello");
-    this.setState({ clicked: !this.state.clicked });
+    this.setState({ clicked: this.props.todo.completed });
   };
 
   handleRemove = () => {
@@ -25,7 +24,7 @@ class Todo extends Component {
     return (
       <div className="todo__container" style={{padding: "10px"}}>
         <div className="todo" style={styles} onClick={this.handleClick}>
-          {this.props.todo}
+          {this.props.todo.text}
         </div>
         <button onClick={this.handleRemove}>Remove</button>
       </div>

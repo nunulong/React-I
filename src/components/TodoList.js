@@ -6,24 +6,24 @@ class TodoList extends Component {
     super();
     this.state = {
       todos: [],
-      newTodo: "",
+      newTodo: {},
     };
   }
 
   handleInput = (event) => {
-    this.setState({ newTodo: event.target.value});
+    this.setState({ newTodo: {text: event.target.value, completed: this.state.newTodo.completed}});
   }
 
   addTodo = (event) => {
     event.preventDefault();
     const todoList = this.state.todos;
-    if (!!this.state.newTodo) {
+    if (!!this.state.newTodo.text) {
       todoList.push(this.state.newTodo);
     } else {
       alert("Please type in something!");
     }
     this.setState({
-      newTodo: "",
+      newTodo: {text: "", completed: null},
       todos: todoList
     });
   }
@@ -32,9 +32,13 @@ class TodoList extends Component {
     const todoList = this.state.todos;
     todoList.splice(index, 1);
     this.setState({
-      newTodo: "",
+      newTodo: {text: "", completed: null},
       todos: todoList
     });
+  }
+
+  handleCheckbox = (event) => {
+    this.setState({newTodo: {text: this.state.newTodo.text, completed: event.target.value}});
   }
 
   render() {
@@ -43,7 +47,9 @@ class TodoList extends Component {
       <div style={styles}>
         {this.state.todos.map((todo, i) => <Todo key={i} index={i} remove={this.removeTodo} todo={todo} />)}
         <form>
-          <input onChange={this.handleInput} placeholder="New Todo" value={this.state.newTodo}/>
+          <input onChange={this.handleInput} placeholder="New Todo" value={this.state.newTodo.text}/>
+          <input onChange={this.handleCheckbox} type="checkbox" id="todo"/>
+          <label htmlFor="todo">Completed</label>
           <button onClick={this.addTodo}>Add</button>
         </form>
       </div>
