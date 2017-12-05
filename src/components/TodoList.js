@@ -28,10 +28,20 @@ class TodoList extends Component {
     });
   }
 
+  removeTodo = (index) => {
+    const todoList = this.state.todos;
+    todoList.splice(index, 1);
+    this.setState({
+      newTodo: "",
+      todos: todoList
+    });
+  }
+
   render() {
+    const styles = { textAlign: "center" };
     return (
-      <div>
-        {this.state.todos.map((todo, i) => <Todo key={i} index={i} todo={todo} />)}
+      <div style={styles}>
+        {this.state.todos.map((todo, i) => <Todo key={i} index={i} remove={this.removeTodo} todo={todo} />)}
         <form>
           <input onChange={this.handleInput} placeholder="New Todo" value={this.state.newTodo}/>
           <button onClick={this.addTodo}>Add</button>

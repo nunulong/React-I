@@ -1,0 +1,14 @@
+.app-title {
+  text-align: center;
+}
+
+.todo__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.todo {
+  padding-right: 10px;
+}
