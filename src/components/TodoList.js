@@ -1,20 +1,25 @@
-import React, { Component } from 'react';
-import Todo from './Todo.js';
+import React, { Component } from "react";
+import Todo from "./Todo.js";
 
 class TodoList extends Component {
   constructor() {
     super();
     this.state = {
       todos: [],
-      newTodo: {},
+      newTodo: { text: "", completed: null },
+      value: false,
     };
   }
 
-  handleInput = (event) => {
-    this.setState({ newTodo: {text: event.target.value, completed: this.state.newTodo.completed}});
-  }
+  handleInput = event => {
+    this.setState({ newTodo: { text: event.target.value } });
+  };
 
-  addTodo = (event) => {
+  handleChange = (event) => {
+    this.setState({ newTodo: { text: this.state.newTodo.text, completed: event.target.value }, value: event.target.value });
+  };
+
+  addTodo = event => {
     event.preventDefault();
     const todoList = this.state.todos;
     if (!!this.state.newTodo.text) {
@@ -22,35 +27,57 @@ class TodoList extends Component {
     } else {
       alert("Please type in something!");
     }
-    this.setState({
-      newTodo: {text: "", completed: null},
-      todos: todoList
-    });
-  }
 
-  removeTodo = (index) => {
+    this.setState({
+      newTodo: { text: "", completed: null },
+      todos: todoList, 
+      value: false,
+    });
+  };
+
+  removeTodo = event => {
     const todoList = this.state.todos;
-    todoList.splice(index, 1);
+    todoList.splice(event, 1);
     this.setState({
-      newTodo: {text: "", completed: null},
+      newTodo: { text: "", completed: null },
       todos: todoList
     });
-  }
-
-  handleCheckbox = (event) => {
-    this.setState({newTodo: {text: this.state.newTodo.text, completed: event.target.value}});
-  }
+  };
 
   render() {
-    const styles = { textAlign: "center" };
     return (
-      <div style={styles}>
-        {this.state.todos.map((todo, i) => <Todo key={i} index={i} remove={this.removeTodo} todo={todo} />)}
-        <form>
-          <input onChange={this.handleInput} placeholder="New Todo" value={this.state.newTodo.text}/>
-          <input onChange={this.handleCheckbox} type="checkbox" id="todo"/>
-          <label htmlFor="todo">Completed</label>
-          <button onClick={this.addTodo}>Add</button>
+      <div className="TableBody">
+        {this.state.todos.map((todo, i) => (
+          <Todo key={i} index={i} remove={this.removeTodo} todo={todo} />
+        ))}
+        <div className="TableRow">
+          <div className="TableCell">Add Your Todo</div>
+          <div className="TableCell"></div>
+          <div className="TableCell"></div>
+        </div>
+        <form onSubmit={this.addTodo} className="TableRow">
+          <div className="TableCell">
+            <input
+              type="text"
+              onChange={this.handleInput}
+              placeholder="New Todo"
+              value={this.state.newTodo.text}
+            />
+          </div>
+          <div className="TableCell">
+            <label>
+              <select
+                value={this.state.value}
+                onChange={this.handleChange}
+              >
+                <option value={true}>Completed</option>
+                <option value={false}>Not Completed</option>
+              </select>
+            </label>
+          </div>
+          <div className="TableCell">
+            <input type="submit" value="Add" />
+          </div>
         </form>
       </div>
     );
