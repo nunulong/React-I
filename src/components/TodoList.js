@@ -12,10 +12,11 @@ class TodoList extends Component {
   }
 
   handleInput = event => {
-    this.setState({ newTodo: { text: event.target.value } });
+    this.setState({ newTodo: { text: event.target.value, completed: this.state.newTodo.completed }, value: this.state.value });
   };
 
   handleChange = (event) => {
+    event.preventDefault();
     this.setState({ newTodo: { text: this.state.newTodo.text, completed: event.target.value }, value: event.target.value });
   };
 
@@ -39,8 +40,7 @@ class TodoList extends Component {
     const todoList = this.state.todos;
     todoList.splice(event, 1);
     this.setState({
-      newTodo: { text: "", completed: null },
-      todos: todoList
+      todos: todoList,
     });
   };
 

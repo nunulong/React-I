@@ -9,16 +9,17 @@ class Todo extends Component {
     };
   }
 
-  handleClick = () => {
+  handleClick = (event) => {
     this.setState({ clicked: this.props.todo.completed });
   };
 
-  handleRemove = () => {
+  handleRemove = (event) => {
     this.props.remove(this.props.index);
+    this.setState({ clicked: this.props.todo.completed });
   };
 
   render() {
-    const styles = this.state.clicked
+    const styles = this.state.clicked && this.props.todo.completed
       ? { textDecoration: "line-through" }
       : { textDecoration: "none" };
     return (
@@ -30,7 +31,7 @@ class Todo extends Component {
           <span>{this.props.todo.completed ? "Yes" : "No"}</span>
         </div>
         <div className="TableCell">
-        <input type="submit" onClick={this.handleRemove} value="Remove" id="Button" disabled={!this.props.todo.completed} />
+        <input type="submit" onClick={this.handleRemove} value="Remove" disabled={!this.props.todo.completed} />
         </div>
       </div>
     );
