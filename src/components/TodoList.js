@@ -5,7 +5,7 @@ class TodoList extends Component {
   constructor() {
     super();
     this.state = {
-      todos: [],
+      todos: window.localStorage.getItem('todos') ? JSON.parse(window.localStorage.getItem('todos')) : [],
       newTodo: { text: "", completed: null },
       value: "0",
     };
@@ -17,7 +17,7 @@ class TodoList extends Component {
 
   handleChange = (event) => {
     this.setState({ newTodo: { text: this.state.newTodo.text, completed: event.target.value }, value: event.target.value });
-    console.log(event.target.value);
+    window.localStorage.setItem('todos', JSON.stringify(this.state.todos));
   };
 
   addTodo = event => {
@@ -29,6 +29,8 @@ class TodoList extends Component {
       alert("Please type in something!");
     }
 
+    window.localStorage.setItem('todos', JSON.stringify(this.state.todos));
+
     this.setState({
       newTodo: { text: "", completed: null },
       todos: todoList, 
@@ -39,6 +41,7 @@ class TodoList extends Component {
   removeTodo = event => {
     const todoList = this.state.todos;
     todoList.splice(event, 1);
+    window.localStorage.setItem('todos', JSON.stringify(this.state.todos));
     this.setState({
       todos: todoList,
     });

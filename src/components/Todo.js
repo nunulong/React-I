@@ -31,7 +31,7 @@ class Todo extends Component {
           <span>{!!parseInt(this.props.todo.completed, 10) ? "Yes" : "No"}</span>
         </div>
         <div className="TableCell">
-        <input type="submit" onClick={this.handleRemove} value="Remove" disabled={!(!!parseInt(this.props.todo.completed, 10))} />
+        <input type="submit" onClick={this.handleRemove} value="Remove" disabled={!parseInt(this.props.todo.completed, 10)} />
         </div>
       </div>
     );
