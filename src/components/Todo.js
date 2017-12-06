@@ -10,16 +10,16 @@ class Todo extends Component {
   }
 
   handleClick = (event) => {
-    this.setState({ clicked: this.props.todo.completed });
+    this.setState({ clicked: !!parseInt(this.props.todo.completed, 10) });
   };
 
   handleRemove = (event) => {
     this.props.remove(this.props.index);
-    this.setState({ clicked: this.props.todo.completed });
+    this.setState({ clicked: !!parseInt(this.props.todo.completed, 10) });
   };
 
   render() {
-    const styles = this.state.clicked && this.props.todo.completed
+    const styles = this.state.clicked && !!parseInt(this.props.todo.completed, 10)
       ? { textDecoration: "line-through" }
       : { textDecoration: "none" };
     return (
@@ -28,10 +28,10 @@ class Todo extends Component {
           {this.props.todo.text}
         </div>
         <div className="TableCell">
-          <span>{this.props.todo.completed ? "Yes" : "No"}</span>
+          <span>{!!parseInt(this.props.todo.completed, 10) ? "Yes" : "No"}</span>
         </div>
         <div className="TableCell">
-        <input type="submit" onClick={this.handleRemove} value="Remove" disabled={!this.props.todo.completed} />
+        <input type="submit" onClick={this.handleRemove} value="Remove" disabled={!(!!parseInt(this.props.todo.completed, 10))} />
         </div>
       </div>
     );

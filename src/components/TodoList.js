@@ -7,7 +7,7 @@ class TodoList extends Component {
     this.state = {
       todos: [],
       newTodo: { text: "", completed: null },
-      value: false,
+      value: "0",
     };
   }
 
@@ -16,8 +16,8 @@ class TodoList extends Component {
   };
 
   handleChange = (event) => {
-    event.preventDefault();
     this.setState({ newTodo: { text: this.state.newTodo.text, completed: event.target.value }, value: event.target.value });
+    console.log(event.target.value);
   };
 
   addTodo = event => {
@@ -32,7 +32,7 @@ class TodoList extends Component {
     this.setState({
       newTodo: { text: "", completed: null },
       todos: todoList, 
-      value: false,
+      value: "0",
     });
   };
 
@@ -70,8 +70,8 @@ class TodoList extends Component {
                 value={this.state.value}
                 onChange={this.handleChange}
               >
-                <option value={true}>Completed</option>
-                <option value={false}>Not Completed</option>
+                <option value="1">Completed</option>
+                <option value="0">Not Completed</option>
               </select>
             </label>
           </div>
